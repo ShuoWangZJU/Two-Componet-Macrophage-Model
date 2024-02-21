@@ -1,0 +1,97 @@
+\BOOKMARK [0][-]{chapter.1}{Changed files}{}% 1
+\BOOKMARK [1][-]{section.1.1}{angle}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{atom}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{atom\137vec}{section.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.1.1}{atom\137vec\137hybrid}{subsection.1.2.1}% 5
+\BOOKMARK [3][-]{subsubsection.1.2.1.2}{atom\137vec\137molecular}{subsection.1.2.1}% 6
+\BOOKMARK [1][-]{section.1.3}{bond}{chapter.1}% 7
+\BOOKMARK [2][-]{subsection.1.3.1}{bond\137hybrid}{section.1.3}% 8
+\BOOKMARK [1][-]{section.1.4}{comm}{chapter.1}% 9
+\BOOKMARK [2][-]{subsection.1.4.1}{comm\137brick}{section.1.4}% 10
+\BOOKMARK [1][-]{section.1.5}{create\137atoms}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.6}{dihedral}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.7}{domain}{chapter.1}% 13
+\BOOKMARK [1][-]{section.1.8}{fixes}{chapter.1}% 14
+\BOOKMARK [2][-]{subsection.1.8.1}{fix\137addforce}{section.1.8}% 15
+\BOOKMARK [2][-]{subsection.1.8.2}{fix\137deposit}{section.1.8}% 16
+\BOOKMARK [2][-]{subsection.1.8.3}{fix\137langevin}{section.1.8}% 17
+\BOOKMARK [2][-]{subsection.1.8.4}{fix\137spring}{section.1.8}% 18
+\BOOKMARK [1][-]{section.1.9}{input.cpp}{chapter.1}% 19
+\BOOKMARK [1][-]{section.1.10}{lammps.cpp}{chapter.1}% 20
+\BOOKMARK [1][-]{section.1.11}{Makefile}{chapter.1}% 21
+\BOOKMARK [2][-]{subsection.1.11.1}{Make.sh}{section.1.11}% 22
+\BOOKMARK [1][-]{section.1.12}{molecular}{chapter.1}% 23
+\BOOKMARK [1][-]{section.1.13}{neigh\137bond}{chapter.1}% 24
+\BOOKMARK [1][-]{section.1.14}{neighbor}{chapter.1}% 25
+\BOOKMARK [1][-]{section.1.15}{neigh\137stencil}{chapter.1}% 26
+\BOOKMARK [1][-]{section.1.16}{output}{chapter.1}% 27
+\BOOKMARK [1][-]{section.1.17}{pair\137dpd}{chapter.1}% 28
+\BOOKMARK [1][-]{section.1.18}{read\137data.cpp}{chapter.1}% 29
+\BOOKMARK [1][-]{section.1.19}{read\137restart.cpp}{chapter.1}% 30
+\BOOKMARK [1][-]{section.1.20}{replicate.cpp}{chapter.1}% 31
+\BOOKMARK [1][-]{section.1.21}{verlet.cpp}{chapter.1}% 32
+\BOOKMARK [1][-]{section.1.22}{write\137data.cpp}{chapter.1}% 33
+\BOOKMARK [1][-]{section.1.23}{write\137restart.cpp}{chapter.1}% 34
+\BOOKMARK [1][-]{section.1.24}{MOLECULE/install.sh}{chapter.1}% 35
+\BOOKMARK [0][-]{chapter.2}{Added files}{}% 36
+\BOOKMARK [1][-]{section.2.1}{angle\137area\137volume}{chapter.2}% 37
+\BOOKMARK [1][-]{section.2.2}{atom\137vec}{chapter.2}% 38
+\BOOKMARK [2][-]{subsection.2.2.1}{atom\137vec\137sdpd}{section.2.2}% 39
+\BOOKMARK [2][-]{subsection.2.2.2}{atom\137vec\137thermal}{section.2.2}% 40
+\BOOKMARK [1][-]{section.2.3}{bond styles}{chapter.2}% 41
+\BOOKMARK [2][-]{subsection.2.3.1}{bond\137area\137harmonic\137visc}{section.2.3}% 42
+\BOOKMARK [2][-]{subsection.2.3.2}{bond\137area\137wlc\137pow\137visc}{section.2.3}% 43
+\BOOKMARK [2][-]{subsection.2.3.3}{bond\137indivharmonic\137visc}{section.2.3}% 44
+\BOOKMARK [2][-]{subsection.2.3.4}{bond\137wlc\137pow\137all}{section.2.3}% 45
+\BOOKMARK [2][-]{subsection.2.3.5}{bond\137wlc\137pow\137all\137visc}{section.2.3}% 46
+\BOOKMARK [1][-]{section.2.4}{comm\137mosaic}{chapter.2}% 47
+\BOOKMARK [1][-]{section.2.5}{create\137source}{chapter.2}% 48
+\BOOKMARK [1][-]{section.2.6}{dihedral\137bend}{chapter.2}% 49
+\BOOKMARK [1][-]{section.2.7}{fixes}{chapter.2}% 50
+\BOOKMARK [2][-]{subsection.2.7.1}{fix\137active\137fluct}{section.2.7}% 51
+\BOOKMARK [2][-]{subsection.2.7.2}{fix\137bond\137create\137break}{section.2.7}% 52
+\BOOKMARK [2][-]{subsection.2.7.3}{fix\137e}{section.2.7}% 53
+\BOOKMARK [2][-]{subsection.2.7.4}{fix\137force\137bound}{section.2.7}% 54
+\BOOKMARK [2][-]{subsection.2.7.5}{fix\137inflow}{section.2.7}% 55
+\BOOKMARK [2][-]{subsection.2.7.6}{fix\137inflow\137periodic}{section.2.7}% 56
+\BOOKMARK [2][-]{subsection.2.7.7}{fix\137lees\137edwards}{section.2.7}% 57
+\BOOKMARK [2][-]{subsection.2.7.8}{fix\137nve\137sdpd}{section.2.7}% 58
+\BOOKMARK [2][-]{subsection.2.7.9}{fix\137nve\137thermal}{section.2.7}% 59
+\BOOKMARK [2][-]{subsection.2.7.10}{fix\137outflow}{section.2.7}% 60
+\BOOKMARK [2][-]{subsection.2.7.11}{fix\137setvel}{section.2.7}% 61
+\BOOKMARK [2][-]{subsection.2.7.12}{fix\137solid\137bound}{section.2.7}% 62
+\BOOKMARK [1][-]{section.2.8}{MersenneTwister}{chapter.2}% 63
+\BOOKMARK [1][-]{section.2.9}{pair styles}{chapter.2}% 64
+\BOOKMARK [2][-]{subsection.2.9.1}{pair\137dpd\137thermal}{section.2.9}% 65
+\BOOKMARK [2][-]{subsection.2.9.2}{pair\137lj\137own}{section.2.9}% 66
+\BOOKMARK [2][-]{subsection.2.9.3}{pair\137sdpd\137full}{section.2.9}% 67
+\BOOKMARK [2][-]{subsection.2.9.4}{pair\137sdpd}{section.2.9}% 68
+\BOOKMARK [2][-]{subsection.2.9.5}{pair\137sdpd\137no\137moment}{section.2.9}% 69
+\BOOKMARK [1][-]{section.2.10}{set\137individ}{chapter.2}% 70
+\BOOKMARK [1][-]{section.2.11}{statistic}{chapter.2}% 71
+\BOOKMARK [2][-]{subsection.2.11.1}{statistic\137com}{section.2.11}% 72
+\BOOKMARK [2][-]{subsection.2.11.2}{statistic\137com\137time}{section.2.11}% 73
+\BOOKMARK [2][-]{subsection.2.11.3}{statistic\137corr}{section.2.11}% 74
+\BOOKMARK [2][-]{subsection.2.11.4}{statistic\137dens}{section.2.11}% 75
+\BOOKMARK [2][-]{subsection.2.11.5}{statistic\137e}{section.2.11}% 76
+\BOOKMARK [2][-]{subsection.2.11.6}{statistic\137extension}{section.2.11}% 77
+\BOOKMARK [2][-]{subsection.2.11.7}{statistic\137force}{section.2.11}% 78
+\BOOKMARK [2][-]{subsection.2.11.8}{statistic\137gyro}{section.2.11}% 79
+\BOOKMARK [2][-]{subsection.2.11.9}{statistic\137msd}{section.2.11}% 80
+\BOOKMARK [2][-]{subsection.2.11.10}{statistic\137rho}{section.2.11}% 81
+\BOOKMARK [2][-]{subsection.2.11.11}{statistic\137stress}{section.2.11}% 82
+\BOOKMARK [2][-]{subsection.2.11.12}{statistic\137vcorr}{section.2.11}% 83
+\BOOKMARK [2][-]{subsection.2.11.13}{statistic\137vel}{section.2.11}% 84
+\BOOKMARK [1][-]{section.2.12}{COPY}{chapter.2}% 85
+\BOOKMARK [2][-]{subsection.2.12.1}{single\137triangle}{section.2.12}% 86
+\BOOKMARK [2][-]{subsection.2.12.2}{statistic\137DLS}{section.2.12}% 87
+\BOOKMARK [2][-]{subsection.2.12.3}{statistic\137SLS}{section.2.12}% 88
+\BOOKMARK [1][-]{section.2.13}{vector}{chapter.2}% 89
+\BOOKMARK [1][-]{section.2.14}{MAKE/MINE}{chapter.2}% 90
+\BOOKMARK [1][-]{section.2.15}{USER-SDPD}{chapter.2}% 91
+\BOOKMARK [0][-]{chapter.3}{Tools}{}% 92
+\BOOKMARK [1][-]{section.3.1}{Analyser for analysing the statistic}{chapter.3}% 93
+\BOOKMARK [1][-]{section.3.2}{compiling \046 running LAMMPS personal}{chapter.3}% 94
+\BOOKMARK [1][-]{section.3.3}{data\137domain}{chapter.3}% 95
+\BOOKMARK [2][-]{subsection.3.3.1}{data\137domain - code}{section.3.3}% 96
+\BOOKMARK [2][-]{subsection.3.3.2}{domain.dat - parameter file}{section.3.3}% 97
