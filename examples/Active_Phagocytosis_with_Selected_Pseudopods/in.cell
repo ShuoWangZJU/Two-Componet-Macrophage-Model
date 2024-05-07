@@ -1,182 +1,160 @@
 # LAMMPS input file for RBC simulation, written by Hongyan Yuan & Ralph Kfoury, 2015
 
-variable     P_damp  equal  1                                                # Sets the Pressure damping variable used in the following " fix npt" commands
-variable     P  equal  0.05                                                  # Sets the desired pressure of the system used in the following " fix npt" commands
-variable     scale1 equal ramp(2.7,2.52)                                      # Sets the scale performed in the final fix on water scaling down sigma from 2.7- 2.5
-variable     ew  equal 0.2                                                   # Sets the energy well ( epsilon) variable used in the pair coefficient specifications
-variable     ini_T  equal  0.02		                                     # Sets the initial temperature used in the fix commands below
-variable     T  equal  0.23                                                  # Sets the final temperature used in the fix commands below
-variable     LD equal  1.0                                                   # Sets the temperature damping parameter used in fix commands below
-#variable    seed equal  14524775
-variable    seed equal  98765432
+variable	P_damp  equal  1												# Sets the Pressure damping variable used in the following " fix npt" commands
+variable	P  equal  0.05													# Sets the desired pressure of the system used in the following " fix npt" commands
+variable	ini_T  equal  0.02												# Sets the initial temperature used in the fix commands below
+variable	T  equal  0.23													# Sets the final temperature used in the fix commands below
+variable	LD equal  1.0													# Sets the temperature damping parameter used in fix commands below
+variable	seed equal  14524775											# Sets the seed number used in dpd/morse pair and fix filopodia/target commands below
 
-# fluidmembrane
-variable     epsilon  equal 1.0
-variable     sigma  equal 1.0
-variable     rcut  equal 2.6
-variable     zeta  equal 4
-variable     mu0  equal 3
-variable     beta  equal 0.0  
+# Parameters for the fluidmembrane pair-wise interactions
+variable	epsilon  equal 1.0
+variable	sigma  equal 1.0
+variable	rcut  equal 2.6
+variable	zeta  equal 4
+variable	mu0  equal 3
+variable	beta  equal 0.0  
 
-#variable     epsilon_prt  equal 1.5
-#variable     beta_prt  equal 0.05
+# Parameters for the dpd/morse pair-wise interactions
+variable	aij  equal 6.0
+variable	gamma  equal 15.0
+variable	D0_particle_m equal 0.01
+variable	D0_particle_p equal 0.50
+variable	aij_skeleton  equal 15.0
+variable	aij_particle  equal 0.0
 
-# DPD/Morse
-variable     aij  equal 6.0
-variable     gamma  equal 15.0
-variable     aij_skeleton  equal 15.0
-variable     aij_particle  equal 0.0
+# Parameters for the harmonic bonds between cytoskeletal beads and transmembrane proteins
+variable	k_harmonic  equal 10.0
+variable	r0_harmonic  equal 1.0
 
-# bond wlc/skele/all/visc and harmonic
-variable     r0_wlc  equal 6.0
-variable     lmax_wlc  equal 15.0
-variable     lambda  equal 0.1
-variable     gamc  equal 2.0
-variable     gamt  equal 2.0
-variable     k_harmonic  equal 10.0
-variable     r0_harmonic  equal 1.0
+# Parameters for the generation of filopodia
+variable	k_harmonic_filo  equal 100.0
+variable	r0_harmonic_filo  equal 1.0
+variable	r0_harmonic_filo_X2  equal 2*v_r0_harmonic_filo
+variable	k_angle_filo_90 equal 100.0
+variable	k_angle_filo_180 equal 10.0
+variable	D0_filo equal 10.0
+variable	R0_morse_filo equal 1.5
+variable	Rcut_morse_filo equal 3.6
 
-#filo
-variable     k_harmonic_filo  equal 100.0
-variable     r0_harmonic_filo  equal 1.0
-variable     r0_harmonic_filo_X2  equal 2*v_r0_harmonic_filo
-variable     k_angle_filo_90 equal 100.0
-variable     k_angle_filo_180 equal 10.0
-variable     D0_filo equal 10.0
-variable     R0_morse_filo equal 1.5
-variable     Rcut_morse_filo equal 3.6
+# Simulation setup
+units		lj                                               
+atom_style	hybrid ellipsoid peri molecular
 
-variable     D0_particle_m equal 0.01
-variable     D0_particle_p equal 0.50
+boundary	p p p
 
-units	     lj                                                              # Sets the units used for the simulation, in this case: Lennard-Jones units                                                       
-#atom_style   hybrid ellipsoid molecular                                      # Defines the atom style used during the simulation, both ellipsoid and molecular. 
-atom_style    hybrid ellipsoid peri molecular
+read_data	Dves_100_extra_area_5p_Dskele_3_inner_layer_box_200X200X200_NP_r5.data                                           # Specifies which read data file will be used to read in initial coordinates of system
 
-#bond_style   harmonic1                                     # Sets the bond style as harmonic spring defined by Hooke's law
+mass		*          1.0                                                 
+set type	1 shape  1 1 1
 
-boundary     p p p                                                           # Creates the periodic boundaries of the simulation box
+special_bonds	lj 1.0 1.0 1.0
 
-read_data    Dves_100_extra_area_5p_Dskele_3_inner_layer_box_200X200X200_NP_r5.data                                           # Specifies which read data file will be used to read in initial coordinates of system
+neighbor	1.0 multi
+comm_modify	vel yes mode multi cutoff/multi 1 3.6 cutoff/multi 2 3.6 cutoff/multi 3 3.6 cutoff/multi 4 3.6 cutoff/multi 5 25
 
-mass         *          1.0                                                 
+# Group setup
+group		bilayer  type 1 4
+group		skeleton  type 5 7
+group		skeleton_original  type 5
+group		tobond  type 4 5 6 7
+group		cell  type 1 4 5 7
+group		water_in  type 2
+group		water_out type 3
+group		water   type 2 3
+group		particle type 6
+group		nowater type 1 4 5 6 7
+group		noout type 1 2 4 5 6 7
 
-set type     1 shape  1 1 1   					     # membrane particle are rigid body, it needs shape parameter to be set
+# Sites where the filopodia grow
+group		mole id 35471	37329	35974	37507	35258	37681	37738	37805	37865	35103	37814	36046	37753	35307	37637	35855	37450	35805	37299	35653	37191	35822	37161	35483	37219
 
-special_bonds   lj 1.0 1.0 1.0
+# Initial velocity
+velocity	nowater create ${T} 87287 loop geom
+velocity	water create ${T} 87287 loop geom
 
-neighbor    1.0 multi
-#neigh_modify	every 1 delay 10 check yes collection/type 2 1*3 4
-comm_modify vel yes mode multi cutoff/multi 1 3.6 cutoff/multi 2 3.6 cutoff/multi 3 3.6 cutoff/multi 4 3.6 cutoff/multi 5 25
-
-group        bilayer  type 1 4                                               # Creates a group called bilayer which consists of type 1 and 2 particles, 
-									     #(Type 1 Bilayer, Type 2 Transmembrane proteins)
-group        skeleton  type 5 7
-group        skeleton_original  type 5
-group        tobond  type 4 5 6 7
-group        cell  type 1 4 5 7
-group        water_in  type 2                                                # Creates a group called water_in consisting of type 6 particles ( Type 6 = Water inside Membrane)
-group        water_out type 3                                                # Creates a group called water_out consisting of type 7 particles ( Type 7 = Water Outside Membrane)
-group        water   type 2 3                                                # Creates a group called water consisting of both type 6 and 7 particles ( Water inside + Out)
-group	particle type 6
-group	nowater type 1 4 5 6 7
-group	noout type 1 2 4 5 6 7
-
-group	mole id 35471	37329	35974	37507	35258	37681	37738	37805	37865	35103	37814	36046	37753	35307	37637	35855	37450	35805	37299	35653	37191	35822	37161	35483	37219
-group	tobreak id 37393	35669	37273	37367	37451	37226	36003	37483	37332	37249	37396	35679	37334	37423	37275	35439	37449	37302	37392	37477	37516	35863	37694	37546	37633	37725	37575	37667	37574	35273	37511	37749	37599	37689	37778	35227	37624	35133	37567	37660
-
-velocity     nowater create ${T} 87287 loop geom                         # Creates Initial Velocity for network particles ( Type 3 and 4 and 5)
-velocity     water create ${T} 87287 loop geom                               # Creates Initial Velocity for water particles ( Type 6 and 7 )
-
+# Bond setup
 bond_style      hybrid harmonic wlc/pow/all/visc
-bond_coeff      1 harmonic ${k_harmonic} ${r0_harmonic}
-bond_coeff      2 wlc/pow/all/visc 0.23 2.2  33.60215 2.0 0 0 1
-bond_coeff      3 wlc/pow/all/visc 0.23 2.2  16.129 2.0 0 0 1
-bond_coeff      4 harmonic ${k_harmonic_filo} ${r0_harmonic_filo}
+bond_coeff      1 harmonic ${k_harmonic} ${r0_harmonic}						# Bonds between the cytoskeletal beads and the transmembrane proteins
+bond_coeff      2 wlc/pow/all/visc 0.23 2.2  33.60215 2.0 0 0 1				# Bonds between the cytoskeletal beads
+bond_coeff      3 wlc/pow/all/visc 0.23 2.2  16.129 2.0 0 0 1				# Bonds between the target beads
+bond_coeff      4 harmonic ${k_harmonic_filo} ${r0_harmonic_filo}			# Bonds between the actin beads
 
+# Angle setup
 angle_style     hybrid area/volume harmonic
-#angle_coeff     1 49000.0 2144.4768 50000.0 6016.0768 100.0000
-angle_coeff     1 area/volume 793.215 2144.4768 202.35 6016.0768 16.129
-angle_coeff     2 harmonic ${k_angle_filo_90} 90
-angle_coeff     3 harmonic ${k_angle_filo_180} 180
+angle_coeff     1 area/volume 793.215 2144.4768 202.35 6016.0768 16.129		# Angles that constrain the area and volume of the target particle
+angle_coeff     2 harmonic ${k_angle_filo_90} 90							# Angles between the filopodia and the cytoskeleton network
+angle_coeff     3 harmonic ${k_angle_filo_180} 180							# Angles between the actin bonds
 
+# Dihedral setup
 dihedral_style  bend
-dihedral_coeff  1 5.312
+dihedral_coeff  1 5.312														# Dihedrals between the triangles on the target particle surface
 
-pair_style   hybrid   dpd/morse ${T} 3.6 ${seed} fluidvismembrane ${T} 2.6 ${seed}                         # Sets the pair_style potentials used for the simulation, 
-                                                                             #in the case both lennard-jones/cut and the fluidmembrane potential
-pair_coeff   1    1   fluidvismembrane  ${epsilon} ${sigma} ${rcut} ${zeta} ${mu0} ${beta} 0        # Sets the pair coefficients and parameters between type 1 and 2 (bilayer) particles 
-pair_coeff   1    2*3   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5                                 # Sets the pair coefficients (Epsilon, Sigma) for interaction  between type 1,2 (bilayer) and 6,7 (water) particles
-pair_coeff   2*3    2*3   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5                              # Sets the pair coefficients (Epsilon, Sigma) for interaction between type 6,7 (water)  
-                                                                             # and type 6,7 (water) particles
-pair_coeff   1    4   fluidvismembrane  2 ${sigma} ${rcut} ${zeta} ${mu0} ${beta} 15
-pair_coeff   2*3    4   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   4    4   fluidvismembrane  ${epsilon} ${sigma} ${rcut} ${zeta} ${mu0} ${beta} 0
+# Pair setup
+pair_style		hybrid	dpd/morse ${T} 3.6 ${seed}	fluidvismembrane ${T} 2.6 ${seed}
+pair_coeff		1		1		fluidvismembrane	${epsilon}		${sigma}	${rcut}	${zeta}				${mu0}				${beta}	0
+pair_coeff		1		2*3		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		2*3		2*3		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		1		4		fluidvismembrane	2				${sigma}	${rcut}	${zeta}				${mu0}				${beta}	15
+pair_coeff		2*3		4		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		4		4		fluidvismembrane	${epsilon}		${sigma}	${rcut}	${zeta}				${mu0}				${beta}	0
+pair_coeff		1		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		2*3		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		4		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		5		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		1		6		dpd/morse			${aij_particle}	${gamma}	2.7		3.6					${D0_particle_m}	0.5		0.5
+pair_coeff		2*3		6		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		4		6		dpd/morse			${aij_particle} ${gamma}	2.7		3.6					${D0_particle_p}	0.5		0.5
+pair_coeff		5		6		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		6		6		dpd/morse			0				${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		1		7		dpd/morse			${aij}			${gamma}	2.7		${Rcut_morse_filo}	${D0_filo}			0.5		${R0_morse_filo}
+pair_coeff		2*3		7		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		4		7		dpd/morse			${aij}			${gamma}	2.7		${Rcut_morse_filo}	0					0.5		${R0_morse_filo}
+pair_coeff		5		7		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		6		7		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
+pair_coeff		7		7		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
 
-pair_coeff   1    5   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   2*3    5   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   4    5   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   5    5   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
+# Output of the thermodynamic data
+thermo_style	custom step temp press ebond
+thermo_modify	lost/bond ignore
+thermo			200
 
-pair_coeff   1    6   dpd/morse   ${aij_particle} ${gamma} 2.7  3.6 ${D0_particle_m} 0.5 0.5
-pair_coeff   2*3    6   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   4    6   dpd/morse   ${aij_particle} ${gamma} 2.7  3.6 ${D0_particle_p} 0.5 0.5
-pair_coeff   5    6   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   6    6   dpd/morse   0 ${gamma} 2.7 3.6 0 0.5 0.5
+# Timestep setup
+timestep		0.005
 
-pair_coeff   1    7   dpd/morse   ${aij} ${gamma} 2.7 ${Rcut_morse_filo} ${D0_filo} 0.5 ${R0_morse_filo}
-pair_coeff   2*3    7   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   4    7   dpd/morse   ${aij} ${gamma} 2.7 ${Rcut_morse_filo} 0 0.5 ${R0_morse_filo}
-pair_coeff   5    7   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   6    7   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
-pair_coeff   7    7   dpd/morse   ${aij} ${gamma} 2.7 3.6 0 0.5 0.5
+# Output of the trajectory of the system except the outer water
+dump			1 noout atom 5000  dump_noout.lammpstrj
 
+# Output of the cytoskeletal bonds
+compute			b1 tobond property/local btype batom1 batom2
+dump			b3 cell local 5000 skeleton_bond.txt c_b1[1] c_b1[2] c_b1[3]
 
-thermo_style custom step temp press ebond                                         # Printing thermodynamic data to the screen and log file 
-thermo_modify lost/bond ignore
+#### Equilibrium
+fix				1 water npt temp ${T} ${T} ${LD} iso ${P} ${P} ${LD}
+run				10000
 
-thermo	     200                                                             # Sets the number of timesteps to run before printing out thermodynamic data 
+fix				789 skeleton npt temp ${ini_T} ${T} ${LD} iso ${P} ${P} ${P_damp}
+fix				p1 particle rigid/nvt single temp ${T} ${T} ${LD}
 
-timestep     0.005                                                            # Sets the timestep of the simulation
+fix				2 bilayer nvt/asphere temp ${T} ${T} ${LD}
 
-dump	     1 noout atom 5000  dump_noout.lammpstrj                           # Command sets when to dump a snapshot of atom quantities to one or 
-                              						     # more files every N timesteps in one of several styles.
+# Output of the energy of the interaction between the target and the membrane
+compute			e1 particle group/group bilayer
+fix				e2 all ave/time 10 5 100 c_e1 c_e1[1] c_e1[2] c_e1[3] file Mem_Target.interaction
 
-compute	b1 tobond property/local btype batom1 batom2
-#dump	b2 tobond local 5000 bonds/skeleton_bond_frame_*.txt c_b1[1] c_b1[2] c_b1[3]
-dump	b3 cell local 5000 skeleton_bond.txt c_b1[1] c_b1[2] c_b1[3]
+run				20000
 
-### equilibrium
+#### Phagocytosis
+# Commands that controls the breakage of the cytoskeletal bonds. The meanings of the parameters are:
+#                                                 Nevery    break_bond_type   target_group   r_break   transmem_bond_type   excluded_group          start_time
+fix				333 skeleton_original skele/break   100            2            particle       3.6             1            excluded_group   mole   start_time   130000
 
-fix          1 water npt temp ${T} ${T} ${LD} iso ${P} ${P} ${LD}            # Applies an NPT ensemble fix to the water group 
-run 10000
+# Commands that controls the area modification of the membrane. The meanings of the parameters are:
+#                                    nevery   lipid_type   d_cut   d_break   angle_min   r_detect   d_Bezier   near_num_limit   angle_near_min max_insert_number  velocity_flag
+fix				a1 bilayer addlipid    1          1         2.0      3.6        0.4        1.1         1.1            2               0.6         number 5000     velocity yes
 
-fix          789 skeleton npt temp ${ini_T} ${T} ${LD} iso ${P} ${P} ${P_damp}
-fix          p1 particle rigid/nvt single temp ${T} ${T} ${LD}
+# Commands that controls the generation and retraction of the selected filopodia. The meanings of the parameters are:
+#                                      Nevery   filo_type    filo_num   no_adh_num   bond_filo_type   bond_ske_type   angle_filo_90_type   angle_filo_180_type   mem_type   prt_type     reverse_time     addlipid_fix_ID    add filo atoms into groups...
+fix				filo222 mole filopodia  5000        7           20           3             4                2                 2                     3               1          4       reverse   160000   addlipid_ID   a1   added_group skeleton tobond cell nowater noout
 
-fix            2 bilayer nvt/asphere temp ${T} ${T} ${LD}      # Applies an NVT (not NPT) ensemble fix to the network group using only temperature parameters               
-
-compute	e1 particle group/group bilayer
-fix	e2 all ave/time 10 5 100 c_e1 c_e1[1] c_e1[2] c_e1[3] file Mem_Target.interaction
-
-run 20000
-
-#                                      Nevery   break_bond_type   target_group   r_break   band3_bond_type   excluded_group          start_time
-#fix	333 skeleton_original skele/break   100            2            particle       3.6            1          excluded_group   mole   start_time   70000
-#run 70000
-
-#                                            start_time   break_bond_type   group_break
-fix	333 skeleton_original skele/break/group    130000            2             tobreak
-
-#                        nevery   lipid_type   d_cut   d_break   angle_min   r_detect   d_Bezier   near_num_limit   angle_near_min
-fix	a1 bilayer addlipid    1          1         2.0      3.6        0.4        1.1         1.1            2               0.6      number 5000 velocity yes
-#                          Nevery   filo_type   filo_num   no_adh_num   bond_filo_type   bond_ske_type   angle_filo_90_type   angle_filo_180_type   mem_type   prt_type   reverse            addlipid_fix_ID    add filo atoms into groups...
-fix	filo222 mole filopodia  5000        7           20           3             4                2                 2                     3           1         4         reverse   160000   addlipid_ID   a1   added_group skeleton tobond cell nowater noout
-
-
-#unfix 222
-#run 200000
-
-#unfix filo222
-
-run 500000
+run				500000
