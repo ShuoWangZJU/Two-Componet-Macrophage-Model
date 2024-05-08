@@ -99,7 +99,7 @@ pair_coeff		4		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
 pair_coeff		5		5		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
 pair_coeff		1		6		dpd/morse			0				${gamma}	2.7		3.6					${D0_particle}		0.5		0.5
 pair_coeff		2*3		6		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
-pair_coeff		4		6		dpd/morse			${aij_particle} ${gamma}	2.7		3.6					${D0_particle}		0.5		0.5
+pair_coeff		4		6		dpd/morse			0				${gamma}	2.7		3.6					${D0_particle}		0.5		0.5
 pair_coeff		5		6		dpd/morse			${aij}			${gamma}	2.7		3.6					0					0.5		0.5
 pair_coeff		6		6		dpd/morse			0				${gamma}	2.7		3.6					0					0.5		0.5
 pair_coeff		1		7		dpd/morse			${aij}			${gamma}	2.7		${Rcut_morse_filo}	${D0_filo}			0.5		${R0_morse_filo}
