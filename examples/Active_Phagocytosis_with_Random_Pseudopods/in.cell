@@ -23,7 +23,7 @@ variable	aij_skeleton  equal 15.0
 
 # Parameters for the harmonic bonds between cytoskeletal beads and transmembrane proteins
 variable	k_harmonic  equal 10.0
-variable	r0_harmonic  equal 1.5
+variable	r0_harmonic  equal 1.0
 
 # Parameters for the generation of filopodia
 variable	k_harmonic_filo  equal 100.0
