@@ -5,7 +5,7 @@ variable	P  equal  0.05													# Sets the desired pressure of the system us
 variable	ini_T  equal  0.02												# Sets the initial temperature used in the fix commands below
 variable	T  equal  0.23													# Sets the final temperature used in the fix commands below
 variable	LD equal  1.0													# Sets the temperature damping parameter used in fix commands below
-variable	seed equal  14524775											# Sets the seed number used in dpd/morse pair and fix filopodia/target commands below
+variable	seed equal  23456987											# Sets the seed number used in dpd/morse pair and fix filopodia/target commands below
 
 # Parameters for the fluidmembrane pair-wise interactions
 variable	epsilon  equal 1.0
